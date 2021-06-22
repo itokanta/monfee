@@ -1,25 +1,47 @@
-<%= form_with model: モデル名, local: true do |f|%>
-  <div class="field">
-    <%= f.label :hoge, "プロトタイプの名称" %><br />
-    <%= f.text_field :hoge, id:"prototype_title" %>
+<%= form_with model: student, local: true do |f|%>
+  <div class='field'>
+    <div class='field-label'>
+      <%= f.label :name%>
+    </div>
+    <div class='field-input'>
+      <%= f.text_field :name, autofocus: true%>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :hoge, "キャッチコピー" %><br />
-    <%= f.text_area :hoge, class: :form__text, id:"prototype_catch_copy" %>
+  <div class='field'>
+    <div class='field-label'>
+      <%= f.label :school_name%>
+      <i>(教室名)</i>
+    </div>
+    <div class='field-input'>
+      <%= f.text_field :school_name%>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :hoge, "コンセプト" %><br />
-    <%= f.text_area :hoge, class: :form__text, id:"prototype_concept" %>
+  <div class='field'>
+    <div class='field-label'>
+      <%= f.label :email%>
+    </div>
+    <div class='field-input'>
+      <%= f.email_field :email%>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :hoge, "プロトタイプの画像" %><br />
-    <%= f.file_field :hoge, id:"prototype_image" %>
+  <div class='field'>
+    <div class='field-label'>
+      <%= f.label :password%>
+      <i>(英数字6文字以上)</i>
+    </div>
+    <div class='field-input'>
+      <%= f.password_field :password, autocomplete: "off"%>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "保存する", class: :form__btn  %>
+  <div class='field'>
+    <div class='field-label'>
+      <%= f.label :password_confirmation%>
+    </div>
+    <div class='field-input'>
+      <%= f.password_field :password_confirmation, autocomplete: "off"%>
+    </div>
   </div>
+  <div class='actions'>
+    <%= f.submit "Create Account", class: 'btn'%>
+  </div>      
 <% end %>
