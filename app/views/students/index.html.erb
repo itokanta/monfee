@@ -1,11 +1,29 @@
 <main class="main">
   <div class="inner">
-    <%# ログインしているときは以下を表示する %>
-      <%# <div class="greeting"> %>
-        <%# こんにちは、 %>
-        <%# <%= link_to "ユーザー名さん", root_path, class: :greeting__link%>
-      <%# </div> %>
-    <%# // ログインしているときは上記を表示する %>
+    <% if user_signed_in? %>
+      <div class="greeting">
+        <h1 class="greeting__link">
+        <%= "#{current_user.school_name}生徒一覧"%>
+        </h1>
+      </div>
+    <% else %>
+      <div class='account-page' id='account-page'>
+        <div class='account-page__inner clearfix'>
+          <div class='account-page__inner--left account-page__header'>
+            <h2>
+              <%= link_to "Log in", new_user_session_path %>
+            </h2>
+            <h5>登録しているユーザーでログイン</h5>
+          </div>
+          <div class='account-page__inner--right account-page__header''>
+            <h2>
+              <%= link_to "Sign up", new_user_registration_path %>
+            </h2>
+            <h5>新規登録</h5>
+          </div>
+        </div>
+      </div>
+    <% end %>
     <div class="card__wrapper">
       <%# 投稿機能実装後、部分テンプレートでプロトタイプ投稿一覧を表示する %>
     </div>
