@@ -1,7 +1,7 @@
 <%= form_with model: student, local: true do |f|%>
   <div class='field'>
     <div class='field-label'>
-      <%= f.label :name%>
+      <%= f.label :name, "生徒名"%>
     </div>
     <div class='field-input'>
       <%= f.text_field :name, autofocus: true%>
@@ -9,39 +9,29 @@
   </div>
   <div class='field'>
     <div class='field-label'>
-      <%= f.label :school_name%>
-      <i>(教室名)</i>
+      <%= f.label :age, "年齢"%>
     </div>
     <div class='field-input'>
-      <%= f.text_field :school_name%>
+      <%= f.text_field :age%>
     </div>
   </div>
   <div class='field'>
     <div class='field-label'>
-      <%= f.label :email%>
+      <%= f.label :guardian_name, "保護者名"%>
     </div>
     <div class='field-input'>
-      <%= f.email_field :email%>
+      <%= f.text_field :guardian_name%>
     </div>
   </div>
   <div class='field'>
     <div class='field-label'>
-      <%= f.label :password%>
-      <i>(英数字6文字以上)</i>
+      <%= f.label :phone_number, "電話番号"%>
     </div>
     <div class='field-input'>
-      <%= f.password_field :password, autocomplete: "off"%>
-    </div>
-  </div>
-  <div class='field'>
-    <div class='field-label'>
-      <%= f.label :password_confirmation%>
-    </div>
-    <div class='field-input'>
-      <%= f.password_field :password_confirmation, autocomplete: "off"%>
+      <%= f.text_field :phone_number%>
     </div>
   </div>
   <div class='actions'>
-    <%= f.submit "Create Account", class: 'btn'%>
+    <%= f.submit "登録", class: 'btn'%>
   </div>      
 <% end %>
