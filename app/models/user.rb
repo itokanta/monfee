@@ -6,4 +6,6 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :school_name, presence: true
+
+  has_many :students
 end
