@@ -1,4 +1,6 @@
 class StudentsController < ApplicationController
+  before_action :student_choose, except:[:index, :new, :create]
+  
   def index
   end
 
@@ -15,9 +17,16 @@ class StudentsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   private
   def student_params
     params.permit(:name, :age, :guardian_name, :phone_number).merge(user_id: current_user.id)
+  end
+
+  def student_choose
+    @student = Student.find(params[:id])
   end
 
 end
