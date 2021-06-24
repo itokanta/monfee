@@ -31,6 +31,11 @@ class StudentsController < ApplicationController
     end
   end
 
+  def destroy
+    @student.destroy
+    redirect_to root_path
+  end
+
   private
   def student_params
     params.permit(:name, :age, :guardian_name, :phone_number).merge(user_id: current_user.id)
