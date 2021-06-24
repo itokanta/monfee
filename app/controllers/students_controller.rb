@@ -20,6 +20,14 @@ class StudentsController < ApplicationController
   def edit
   end
 
+  def update
+    if @student.update(student_params)
+      redirect_to student_path(@student)
+    else
+      render :edit
+    end
+  end
+
   private
   def student_params
     params.permit(:name, :age, :guardian_name, :phone_number).merge(user_id: current_user.id)
