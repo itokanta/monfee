@@ -235,14 +235,27 @@ a {
   text-decoration: underline;
 }
 
+.edit_delete{
+  display: flex;
+  justify-content: space-around;
+}
+
+.cell{
+  padding: 0.4em 1.6em;
+  border: 1px #000000 solid;
+  border-radius: 3px;
+}
+
 /* ユーザーページ */
 .user__wrapper{
   min-height: calc(100vh - 161px);
+  display: flex;
 }
 .table{
   border-collapse: collapse;
   margin-bottom: 32px;
   width: 50%;
+  margin-left: 70px;
 }
 .table__col1{
   text-align: left;
