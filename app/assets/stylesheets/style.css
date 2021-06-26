@@ -166,6 +166,7 @@ a {
 .student_list {
   margin-bottom: 10px;
   text-align: center;
+  text-decoration: underline;
 }
 
 /* 詳細ページ */
