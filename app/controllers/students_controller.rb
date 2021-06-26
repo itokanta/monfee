@@ -2,6 +2,9 @@ class StudentsController < ApplicationController
   before_action :student_choose, except:[:index, :new, :create]
   
   def index
+    if user_signed_in?
+      @student = Student.where(user_id: current_user.id)
+    end
   end
 
   def new
