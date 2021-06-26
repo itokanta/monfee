@@ -1,0 +1,35 @@
+<div class="main">
+  <div class="inner">
+    <div class="user__wrapper ">
+      <div>
+        <h2 class="page-heading">
+          <%= "ユーザー名さんの情報"%>
+        </h2>
+        <div class="edit_delete">
+          <%= link_to "編集", edit_student_path, class: :cell %>
+          <%= link_to "削除", student_path, method: :delete, class: :cell %>
+        </div>
+      </div>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th class="table__col1">生徒名</th>
+            <td class="table__col2"><%= @student.name %></td>
+          </tr>
+          <tr>
+            <th class="table__col1">年齢</th>
+            <td class="table__col2"><%= @student.age %></td>
+          </tr>
+          <tr>
+            <th class="table__col1">保護者名</th>
+            <td class="table__col2"><%= @student.guardian_name %></td>
+          </tr>
+          <tr>
+            <th class="table__col1">連絡先</th>
+            <td class="table__col2"><%= @student.phone_number %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

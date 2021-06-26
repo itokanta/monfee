@@ -3,8 +3,13 @@
     <% if user_signed_in? %>
       <div class="greeting">
         <h1 class="greeting__link">
-        <%= "#{current_user.school_name}生徒一覧"%>
+          <%= "#{current_user.school_name}生徒一覧"%>
         </h1>
+        <p>生徒名をクリックすると詳細画面へ移動します。</p>
+        <p>詳細画面から月謝計算が可能です。</p>
+      </div>
+      <div class="card__wrapper">
+        <%= render partial: 'student', collection: @student %>
       </div>
     <% else %>
       <div class='account-page' id='account-page'>
@@ -15,7 +20,7 @@
             </h2>
             <h5>登録しているユーザーでログイン</h5>
           </div>
-          <div class='account-page__inner--right account-page__header''>
+          <div class='account-page__inner--right account-page__header'>
             <h2>
               <%= link_to "Sign up", new_user_registration_path %>
             </h2>
@@ -24,7 +29,5 @@
         </div>
       </div>
     <% end %>
-    <div class="card__wrapper">
-    </div>
   </div>
 </main>
