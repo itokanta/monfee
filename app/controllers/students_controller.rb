@@ -5,7 +5,7 @@ class StudentsController < ApplicationController
   end
 
   def new
-    @students = Student.new
+    @student = Student.new
   end
 
   def create
@@ -38,7 +38,7 @@ class StudentsController < ApplicationController
 
   private
   def student_params
-    params.permit(:name, :age, :guardian_name, :phone_number).merge(user_id: current_user.id)
+    params.require(:student).permit(:name, :age, :guardian_name, :phone_number).merge(user_id: current_user.id)
   end
 
   def student_choose
