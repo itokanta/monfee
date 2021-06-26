@@ -6,8 +6,8 @@
           <%= "ユーザー名さんの情報"%>
         </h2>
         <div class="edit_delete">
-          <div class="cell">編集</div>
-          <div class="cell">削除</div>
+          <%= link_to "編集", edit_student_path, class: :cell %>
+          <%= link_to "削除", student_path, method: :delete, class: :cell %>
         </div>
       </div>
       <table class="table">
