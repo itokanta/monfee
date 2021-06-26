@@ -3,8 +3,10 @@
     <% if user_signed_in? %>
       <div class="greeting">
         <h1 class="greeting__link">
-        <%= "#{current_user.school_name}生徒一覧"%>
+          <%= "#{current_user.school_name}生徒一覧"%>
         </h1>
+        <p>生徒名をクリックすると詳細画面へ移動します。</p>
+        <p>詳細画面から月謝計算が可能です。</p>
       </div>
       <div class="card__wrapper">
         <%= render partial: 'student', collection: @student %>
