@@ -13,20 +13,20 @@
       <table class="table">
         <tbody>
           <tr>
-            <th class="table__col1">名前</th>
-            <td class="table__col2"><%= "ユーザー名" %></td>
+            <th class="table__col1">生徒名</th>
+            <td class="table__col2"><%= @student.name %></td>
           </tr>
           <tr>
-            <th class="table__col1">プロフィール</th>
-            <td class="table__col2"><%= "ユーザーのプロフィール" %></td>
+            <th class="table__col1">年齢</th>
+            <td class="table__col2"><%= @student.age %></td>
           </tr>
           <tr>
-            <th class="table__col1">所属</th>
-            <td class="table__col2"><%= "ユーザーの所属" %></td>
+            <th class="table__col1">保護者名</th>
+            <td class="table__col2"><%= @student.guardian_name %></td>
           </tr>
           <tr>
-            <th class="table__col1">役職</th>
-            <td class="table__col2"><%= "ユーザーの役職" %></td>
+            <th class="table__col1">連絡先</th>
+            <td class="table__col2"><%= @student.phone_number %></td>
           </tr>
         </tbody>
       </table>

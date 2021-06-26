@@ -6,6 +6,9 @@
         <%= "#{current_user.school_name}生徒一覧"%>
         </h1>
       </div>
+      <div class="card__wrapper">
+        <%= render partial: 'student', collection: @student %>
+      </div>
     <% else %>
       <div class='account-page' id='account-page'>
         <div class='account-page__inner clearfix'>
@@ -24,7 +27,5 @@
         </div>
       </div>
     <% end %>
-    <div class="card__wrapper">
-    </div>
   </div>
 </main>
