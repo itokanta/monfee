@@ -15,9 +15,7 @@ ActiveRecord::Schema.define(version: 2021_06_26_164151) do
   create_table "attendances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "year", null: false
-    t.integer "month", null: false
-    t.integer "mday", null: false
+    t.date "entry", null: false
     t.integer "fee", null: false
     t.bigint "student_id"
     t.index ["student_id"], name: "index_attendances_on_student_id"
