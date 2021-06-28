@@ -1,4 +1,5 @@
 class AttendancesController < ApplicationController
+  before_action :authenticate_user!
   before_action :student_choose
   before_action :student_entry, only:[:index, :search]
   before_action :search_attendance, only:[:search]

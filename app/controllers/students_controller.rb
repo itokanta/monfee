@@ -1,4 +1,5 @@
 class StudentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :student_choose, except:[:index, :new, :create]
   
   def index
