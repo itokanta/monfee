@@ -1,0 +1,11 @@
+<div class='account-page' id='account-page'>
+  <div class='account-page__inner clearfix'>
+    <div class='account-page__inner--left account-page__header'>
+      <h2>Attendance Edit</h2>
+      <h5>出席・料金編集</h5>
+    </div>
+    <div class='account-page__inner--right user-form'>
+      <%= render partial: "form", locals: { student: @student, attendance: @attendance } %>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 class AttendancesController < ApplicationController
-  before_action :student_choose, except:[:index]
+  before_action :student_choose
+  before_action :attendance_choose, only:[:edit, :update]
 
   def index
     @attendance = Attendance.where(student_id: params[:student_id])
@@ -18,6 +19,17 @@ class AttendancesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @attendance.update(attendance_params)
+      redirect_to student_attendances_path(@student)
+    else
+      render :new
+    end
+  end
+
   private
   def attendance_params
     params.require(:attendance).permit(:entry, :fee).merge(student_id: params[:student_id])
@@ -25,5 +37,9 @@ class AttendancesController < ApplicationController
 
   def student_choose
     @student = Student.find(params[:student_id])
+  end
+
+  def attendance_choose
+    @attendance = Attendance.find(params[:id])
   end
 end
