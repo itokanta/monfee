@@ -169,6 +169,11 @@ a {
   text-decoration: underline;
 }
 
+.attendance_list {
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
 /* 詳細ページ */
 .prototype__wrapper{
   min-height: calc(100vh - 161px);
