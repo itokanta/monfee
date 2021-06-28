@@ -1,0 +1,24 @@
+<main class="main">
+  <div class="inner">
+    <div class="greeting">
+      <h1 class="greeting__link">
+        <%= "#{current_user.school_name}月謝管理"%>
+      </h1>
+      <p>日付をクリックすると出席情報の編集・削除ページへ移動します。</p>
+    </div>
+    <div>
+      <% @attendance.each do |attendance| %>
+        <div class="attendance_list">
+          <%= link_to "#{attendance.entry}・・・#{attendance.fee}円", edit_student_attendance_path(@student, attendance.id) %>
+        </div>
+      <% end %>
+      </div>
+      <div>
+        <%= link_to "出席日追加", new_student_attendance_path %>
+      </div>
+      <div>
+        <%= link_to "月謝計算", student_attendances_search_path %>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,31 @@
+<main class="main">
+  <div class="inner">
+    <div class="greeting">
+      <h2>
+        月謝計算
+      </h2>
+      <p>例)1111年1月1日→1111-01-01のように入力してください。</p>
+      <%= search_form_for @q, url: student_attendances_search_path do |f| %>
+        <%= f.search_field :entry_gteq %>から
+        <%= f.search_field :entry_lteq %>まで
+        <br>
+        <%= f.submit '検索' %>
+      <% end %>
+
+      <% if @sum.length != 0 %>
+        <% sum_fee = 0%>
+        <% @sum.each do |sum| %>
+          <br>
+          <li>
+            <%= sum.entry %>・・・
+            <%= sum.fee %>円
+            <% sum_fee += sum.fee %>
+          </li>
+        <% end %>
+        合計<%= sum_fee %>円
+      <% else %>
+        <%= "値が存在しません" %>
+      <% end %>
+    </div>
+  </div>
+</main>
