@@ -2,7 +2,7 @@ class AttendancesController < ApplicationController
   before_action :student_choose
   before_action :student_entry, only:[:index, :search]
   before_action :search_attendance, only:[:search]
-  before_action :attendance_choose, only:[:edit, :update]
+  before_action :attendance_choose, only:[:edit, :update, :destroy]
 
   def index
   end
@@ -33,6 +33,11 @@ class AttendancesController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    @attendance.destroy
+    redirect_to student_attendances_path(@student)
   end
 
   private
