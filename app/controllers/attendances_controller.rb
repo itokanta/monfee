@@ -2,6 +2,7 @@ class AttendancesController < ApplicationController
   before_action :student_choose, except:[:index]
 
   def index
+    @attendance = Attendance.where(student_id: params[:student_id])
   end
 
   def new
