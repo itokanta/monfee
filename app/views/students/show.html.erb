@@ -3,11 +3,14 @@
     <div class="user__wrapper ">
       <div>
         <h2 class="page-heading">
-          <%= "ユーザー名さんの情報"%>
+          <%= "#{@student.name}さんの情報"%>
         </h2>
         <div class="edit_delete">
           <%= link_to "編集", edit_student_path, class: :cell %>
           <%= link_to "削除", student_path, method: :delete, class: :cell %>
+        </div>
+        <div class="management">
+          <%= link_to "月謝管理", student_attendances_path(@student), class: :cell %>
         </div>
       </div>
       <table class="table">
