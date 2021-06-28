@@ -1,9 +1,14 @@
 class AttendancesController < ApplicationController
   before_action :student_choose
+  before_action :student_entry, only:[:index, :search]
+  before_action :search_attendance, only:[:search]
   before_action :attendance_choose, only:[:edit, :update]
 
   def index
-    @attendance = Attendance.where(student_id: params[:student_id])
+  end
+
+  def search
+    @sum = @q.result
   end
 
   def new
@@ -35,11 +40,19 @@ class AttendancesController < ApplicationController
     params.require(:attendance).permit(:entry, :fee).merge(student_id: params[:student_id])
   end
 
+  def student_entry
+    @attendance = Attendance.where(student_id: params[:student_id])
+  end
+
   def student_choose
     @student = Student.find(params[:student_id])
   end
 
   def attendance_choose
     @attendance = Attendance.find(params[:id])
+  end
+
+  def search_attendance
+    @q = Attendance.ransack(params[:q])
   end
 end
