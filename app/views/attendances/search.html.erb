@@ -30,7 +30,9 @@
         </h3>
       </div>
     <% else %>
-      <%= "値が存在しません" %>
+      <div class="null_text">
+        <%= "値が存在しません" %>
+      </div>
     <% end %>
     <div class="bt_custom">
       <%= link_to "別の月の計算をする", student_attendances_search_path, class: :cell %>
