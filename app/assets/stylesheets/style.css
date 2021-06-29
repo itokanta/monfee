@@ -194,7 +194,12 @@ a {
 }
 
 .custom {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.null_text {
+  text-align: center;
+  margin: 20px 0px 40px 0px;
 }
 
 /* 詳細ページ */

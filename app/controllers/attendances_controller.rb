@@ -2,13 +2,13 @@ class AttendancesController < ApplicationController
   before_action :authenticate_user!
   before_action :student_choose
   before_action :student_entry, only:[:index, :search]
-  before_action :search_attendance, only:[:search]
   before_action :attendance_choose, only:[:edit, :update, :destroy]
 
   def index
   end
 
   def search
+    @q = @attendance.ransack(params[:q])
     @sum = @q.result
   end
 
@@ -56,9 +56,5 @@ class AttendancesController < ApplicationController
 
   def attendance_choose
     @attendance = Attendance.find(params[:id])
-  end
-
-  def search_attendance
-    @q = Attendance.ransack(params[:q])
   end
 end
