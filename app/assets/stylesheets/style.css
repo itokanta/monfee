@@ -193,6 +193,10 @@ a {
   margin-bottom: 20px;
 }
 
+.custom {
+    margin-bottom: 30px;
+}
+
 /* 詳細ページ */
 .prototype__wrapper{
   min-height: calc(100vh - 161px);
