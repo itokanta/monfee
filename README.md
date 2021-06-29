@@ -1,24 +1,44 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## アプリケーション名
+Monfee
 
-Things you may want to cover:
+## アプリケーション概要
+個人で教室業（ピアノ教室など）を営む方を対象とした、出席、月謝管理アプリです。
 
-* Ruby version
+生徒情報の登録、編集、削除
 
-* System dependencies
+出席日、発生料金の登録、編集、削除
 
-* Configuration
+ユーザーが指定した期間で発生した料金の合計計算
 
-* Database creation
+が可能です。
 
-* Database initialization
+## テスト用アカウント
+email: tests@test.co.jp
+pass: aaa111
 
-* How to run the test suite
+## 利用方法
+アカウント作成が必須となります。アカウント作成後、ログインし、任意の操作を行ってください
 
-* Services (job queues, cache servers, search engines, etc.)
+## 目指した課題解決
+教室業を営む方の多くはパソコン操作に苦手意識を持っているため、月謝管理を紙媒体で行っています。したがって、計算ミスや記入漏れなどが発生することがあったり、生徒数が増えてきた時の管理が大変になる、年次の会計管理の際に紙だと処理がしづらいなどの問題があります。
 
-* Deployment instructions
+これらの課題を解決するために開発したのがMonfeeです。
 
-* ...
+出席・料金情報を一覧で見やすくし、月謝も期間を入力することで自動的に計算できるようになっています。
+
+また、パソコン操作に苦手意識を持っている方をターゲットとしているため、できるだけわかりやすく、シンプルに操作できるようにもなっています。
+
+## 実装機能
+### ユーザー管理機能
+Monfeeの利用者を管理する機能です。
+
+### 生徒管理機能
+教室に所属する生徒を登録できる機能です。
+
+### 出席・料金管理機能
+生徒の出席とそれに伴って発生した料金を登録できる機能です。
+
+### 月謝計算機能
+出席・料金管理機能で登録した料金のうち、ユーザーが指定した期間に発生した料金の合計を算出できる機能です。
