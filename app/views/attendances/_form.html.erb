@@ -11,22 +11,22 @@
   <div class='field'>
     <div class='field-label'>
       <%= f.label :fee_plan_id, "月謝プラン"%>
-      <i>(プランを選択すると自動で金額が入力されます)</i>
     </div>
     <div class='field-input'>
       <%= f.collection_select :fee_plan_id, @fee_plans, :id, :name, 
-                              { prompt: "プランを選択してください（または手動入力）" }, 
-                              { class: 'form-control', id: 'fee_plan_select' } %>
+                              { prompt: "月謝プランを選択してください" }, 
+                              { class: 'form-control', id: 'fee_plan_select', required: true } %>
     </div>
   </div>
   
+  <!-- 金額は選択されたプランから自動設定されるため、表示のみ -->
   <div class='field'>
     <div class='field-label'>
-      <%= f.label :fee, "料金"%>
-      <i>(コンマ不要。数字のみ入力してください)</i>
+      料金（自動設定）
     </div>
     <div class='field-input'>
-      <%= f.number_field :fee, class: 'form-control', id: 'fee_input' %>
+      <input type="text" id="fee_display" class="form-control" readonly placeholder="プランを選択すると表示されます">
+      <%= f.hidden_field :fee, id: 'fee_input' %>
     </div>
   </div>
   
@@ -39,8 +39,9 @@
 document.addEventListener('DOMContentLoaded', function() {
   const feePlanSelect = document.getElementById('fee_plan_select');
   const feeInput = document.getElementById('fee_input');
+  const feeDisplay = document.getElementById('fee_display');
   
-  if (feePlanSelect && feeInput) {
+  if (feePlanSelect && feeInput && feeDisplay) {
     // プランと金額のマッピング
     const planAmounts = {
       <% @fee_plans.each do |plan| %>
@@ -51,9 +52,12 @@ document.addEventListener('DOMContentLoaded', function() {
     feePlanSelect.addEventListener('change', function() {
       const selectedPlanId = this.value;
       if (selectedPlanId && planAmounts[selectedPlanId]) {
-        feeInput.value = planAmounts[selectedPlanId];
+        const amount = planAmounts[selectedPlanId];
+        feeInput.value = amount;
+        feeDisplay.value = '¥' + amount.toLocaleString();
       } else {
         feeInput.value = '';
+        feeDisplay.value = '';
       }
     });
   }
