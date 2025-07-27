@@ -1,0 +1,2 @@
+module FeePlansHelper
+end
