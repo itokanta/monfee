@@ -1,2 +1,32 @@
-<h1>FeePlans#edit</h1>
-<p>Find me in app/views/fee_plans/edit.html.erb</p>
+<div class="main">
+  <div class="inner">
+    <h1>月謝プラン編集</h1>
+    
+    <%= form_with model: @fee_plan, local: true do |f| %>
+      <% if @fee_plan.errors.any? %>
+        <div class="alert alert-danger">
+          <ul>
+            <% @fee_plan.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <div class="form-group">
+        <%= f.label :name, "プラン名" %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :amount, "金額（円）" %>
+        <%= f.number_field :amount, class: "form-control" %>
+      </div>
+      
+      <div class="form-actions">
+        <%= f.submit "更新", class: "btn btn-primary" %>
+        <%= link_to "キャンセル", fee_plans_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
