@@ -6,12 +6,3 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# サンプル月謝プラン
-FeePlan.create!([
-  { name: "月4回コース", amount: 8000 },
-  { name: "月8回コース", amount: 15000 },
-  { name: "月12回コース", amount: 22000 },
-  { name: "体験レッスン", amount: 1000 }
-])
-
-puts "月謝プランのサンプルデータを作成しました"
