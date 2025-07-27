@@ -4,30 +4,30 @@
       <div class="row">
         <!-- 左カラム：生徒情報 -->
         <div class="col-md-4">
-          <h2 class="page-heading">
-            <%= "#{@student.name}さんの情報"%>
-          </h2>
+        <h2 class="page-heading">
+          <%= "#{@student.name}さんの情報"%>
+        </h2>
           
-          <table class="table">
-            <tbody>
-              <tr>
-                <th class="table__col1">生徒名</th>
-                <td class="table__col2"><%= @student.name %></td>
-              </tr>
-              <tr>
-                <th class="table__col1">年齢</th>
-                <td class="table__col2"><%= @student.age %></td>
-              </tr>
-              <tr>
-                <th class="table__col1">保護者名</th>
-                <td class="table__col2"><%= @student.guardian_name %></td>
-              </tr>
-              <tr>
-                <th class="table__col1">連絡先</th>
-                <td class="table__col2"><%= @student.phone_number %></td>
-              </tr>
-            </tbody>
-          </table>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th class="table__col1">生徒名</th>
+            <td class="table__col2"><%= @student.name %></td>
+          </tr>
+          <tr>
+            <th class="table__col1">年齢</th>
+            <td class="table__col2"><%= @student.age %></td>
+          </tr>
+          <tr>
+            <th class="table__col1">保護者名</th>
+            <td class="table__col2"><%= @student.guardian_name %></td>
+          </tr>
+          <tr>
+            <th class="table__col1">連絡先</th>
+            <td class="table__col2"><%= @student.phone_number %></td>
+          </tr>
+        </tbody>
+      </table>
           
           <div class="action-buttons">
             <%= link_to "編集", edit_student_path, class: "btn btn-primary" %>
