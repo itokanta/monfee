@@ -3,15 +3,15 @@ class FeePlansController < ApplicationController
   before_action :set_fee_plan, only: [:show, :edit, :update, :destroy]
 
   def index
-    @fee_plans = FeePlan.all
+    @fee_plans = current_user.fee_plans
   end
 
   def new
-    @fee_plan = FeePlan.new
+    @fee_plan = current_user.fee_plans.build
   end
 
   def create
-    @fee_plan = FeePlan.new(fee_plan_params)
+    @fee_plan = current_user.fee_plans.build(fee_plan_params)
     if @fee_plan.save
       redirect_to fee_plans_path, notice: '月謝プランが作成されました。'
     else
@@ -38,7 +38,7 @@ class FeePlansController < ApplicationController
   private
 
   def set_fee_plan
-    @fee_plan = FeePlan.find(params[:id])
+    @fee_plan = current_user.fee_plans.find(params[:id])
   end
 
   def fee_plan_params
