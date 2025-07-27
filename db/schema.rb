@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_07_27_150555) do
+ActiveRecord::Schema.define(version: 2025_07_27_162123) do
 
   create_table "attendances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2025_07_27_150555) do
     t.integer "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_fee_plans_on_user_id"
   end
 
   create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -57,5 +59,6 @@ ActiveRecord::Schema.define(version: 2025_07_27_150555) do
 
   add_foreign_key "attendances", "fee_plans"
   add_foreign_key "attendances", "students"
+  add_foreign_key "fee_plans", "users"
   add_foreign_key "students", "users"
 end
