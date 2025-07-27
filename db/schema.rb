@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_07_27_062042) do
+ActiveRecord::Schema.define(version: 2025_07_27_150555) do
 
   create_table "attendances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -18,10 +18,8 @@ ActiveRecord::Schema.define(version: 2025_07_27_062042) do
     t.date "entry", null: false
     t.integer "fee", null: false
     t.bigint "student_id"
-    t.bigint "fee_plan_id_id", null: false
     t.bigint "fee_plan_id"
     t.index ["fee_plan_id"], name: "index_attendances_on_fee_plan_id"
-    t.index ["fee_plan_id_id"], name: "index_attendances_on_fee_plan_id_id"
     t.index ["student_id"], name: "index_attendances_on_student_id"
   end
 
