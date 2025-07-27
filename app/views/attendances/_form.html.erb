@@ -40,20 +40,22 @@ document.addEventListener('DOMContentLoaded', function() {
   const feePlanSelect = document.getElementById('fee_plan_select');
   const feeInput = document.getElementById('fee_input');
   
-  // プランと金額のマッピング
-  const planAmounts = {
-    <% @fee_plans.each do |plan| %>
-      <%= plan.id %>: <%= plan.amount %>,
-    <% end %>
-  };
-  
-  feePlanSelect.addEventListener('change', function() {
-    const selectedPlanId = this.value;
-    if (selectedPlanId && planAmounts[selectedPlanId]) {
-      feeInput.value = planAmounts[selectedPlanId];
-    } else {
-      feeInput.value = '';
-    }
-  });
+  if (feePlanSelect && feeInput) {
+    // プランと金額のマッピング
+    const planAmounts = {
+      <% @fee_plans.each do |plan| %>
+        '<%= plan.id %>': <%= plan.amount %><%= ',' unless plan == @fee_plans.last %>
+      <% end %>
+    };
+    
+    feePlanSelect.addEventListener('change', function() {
+      const selectedPlanId = this.value;
+      if (selectedPlanId && planAmounts[selectedPlanId]) {
+        feeInput.value = planAmounts[selectedPlanId];
+      } else {
+        feeInput.value = '';
+      }
+    });
+  }
 });
 </script>
