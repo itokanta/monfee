@@ -1,0 +1,2 @@
+class FeePlan < ApplicationRecord
+end
