@@ -1,38 +1,98 @@
 <div class="main">
   <div class="inner">
-    <div class="user__wrapper ">
-      <div>
-        <h2 class="page-heading">
-          <%= "#{@student.name}さんの情報"%>
-        </h2>
-        <div class="edit_delete">
-          <%= link_to "編集", edit_student_path, class: :cell %>
-          <%= link_to "削除", student_path, method: :delete, class: :cell %>
+    <div class="student-detail-wrapper">
+      <div class="row">
+        <!-- 左カラム：生徒情報 -->
+        <div class="col-md-4">
+          <h2 class="page-heading">
+            <%= "#{@student.name}さんの情報"%>
+          </h2>
+          
+          <table class="table">
+            <tbody>
+              <tr>
+                <th class="table__col1">生徒名</th>
+                <td class="table__col2"><%= @student.name %></td>
+              </tr>
+              <tr>
+                <th class="table__col1">年齢</th>
+                <td class="table__col2"><%= @student.age %></td>
+              </tr>
+              <tr>
+                <th class="table__col1">保護者名</th>
+                <td class="table__col2"><%= @student.guardian_name %></td>
+              </tr>
+              <tr>
+                <th class="table__col1">連絡先</th>
+                <td class="table__col2"><%= @student.phone_number %></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div class="action-buttons">
+            <%= link_to "編集", edit_student_path, class: "btn btn-primary" %>
+            <%= link_to "削除", student_path, method: :delete, class: "btn btn-danger", confirm: "本当に削除しますか？" %>
+            <%= link_to "月謝登録", new_student_attendance_path(@student), class: "btn btn-success" %>
+          </div>
         </div>
-        <div class="management">
-          <%= link_to "月謝管理", student_attendances_path(@student), class: :cell %>
+        
+        <!-- 右カラム：月謝一覧 -->
+        <div class="col-md-8">
+          <h3>月謝一覧</h3>
+          
+          <!-- 期間指定フォーム -->
+          <div class="period-filter" style="margin-bottom: 20px;">
+            <%= form_with url: student_path(@student), method: :get, local: true do |f| %>
+              <div class="form-group">
+                <%= f.label :start_date, "開始日：" %>
+                <%= f.date_field :start_date, value: @start_date %>
+                <%= f.label :end_date, "終了日：" %>
+                <%= f.date_field :end_date, value: @end_date %>
+                <%= f.submit "期間指定", class: "btn btn-secondary btn-sm" %>
+                <%= link_to "クリア", student_path(@student), class: "btn btn-light btn-sm" %>
+              </div>
+            <% end %>
+          </div>
+          
+          <!-- 合計金額表示 -->
+          <div class="total-amount" style="margin-bottom: 20px;">
+            <% if @start_date && @end_date %>
+              <p><strong><%= @start_date.strftime("%Y年%m月%d日") %>から<%= @end_date.strftime("%Y年%m月%d日") %>までの合計金額は<%= number_to_currency(@student.total_fee(@start_date, @end_date), unit: "¥", precision: 0) %>です。</strong></p>
+            <% else %>
+              <p><strong>これまでの合計金額は<%= number_to_currency(@student.total_fee, unit: "¥", precision: 0) %>です。</strong></p>
+            <% end %>
+          </div>
+          
+          <!-- 月謝一覧テーブル -->
+          <div class="attendance-table-wrapper">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>登録日</th>
+                  <th>プラン名</th>
+                  <th>金額</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @attendances.each do |attendance| %>
+                  <tr>
+                    <td><%= attendance.entry.strftime("%Y/%m/%d") %></td>
+                    <td><%= attendance.fee_plan&.name || "手動入力" %></td>
+                    <td><%= number_to_currency(attendance.fee, unit: "¥", precision: 0) %></td>
+                    <td>
+                      <%= link_to "編集", edit_student_attendance_path(@student, attendance), class: "btn btn-sm btn-outline-primary" %>
+                      <%= link_to "削除", student_attendance_path(@student, attendance), method: :delete, 
+                                  class: "btn btn-sm btn-outline-danger", 
+                                  confirm: "本当に削除しますか？" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <table class="table">
-        <tbody>
-          <tr>
-            <th class="table__col1">生徒名</th>
-            <td class="table__col2"><%= @student.name %></td>
-          </tr>
-          <tr>
-            <th class="table__col1">年齢</th>
-            <td class="table__col2"><%= @student.age %></td>
-          </tr>
-          <tr>
-            <th class="table__col1">保護者名</th>
-            <td class="table__col2"><%= @student.guardian_name %></td>
-          </tr>
-          <tr>
-            <th class="table__col1">連絡先</th>
-            <td class="table__col2"><%= @student.phone_number %></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>

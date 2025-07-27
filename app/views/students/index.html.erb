@@ -8,8 +8,50 @@
         <p>生徒名をクリックすると詳細画面へ移動します。</p>
         <p>詳細画面から月謝管理画面へ移動できます。</p>
       </div>
-      <div class="card__wrapper">
-        <%= render partial: 'student', collection: @student %>
+      
+      <!-- 月謝プラン管理へのリンク -->
+      <div style="margin-bottom: 20px;">
+        <%= link_to "月謝プラン管理", fee_plans_path, class: "btn btn-primary" %>
+      </div>
+      
+      <!-- 期間指定フォーム -->
+      <div class="period-filter">
+        <%= form_with url: root_path, method: :get, local: true do |f| %>
+          <div class="form-group">
+            <%= f.label :start_date, "開始日：" %>
+            <%= f.date_field :start_date, value: @start_date %>
+            <%= f.label :end_date, "終了日：" %>
+            <%= f.date_field :end_date, value: @end_date %>
+            <%= f.submit "期間指定", class: "btn btn-secondary" %>
+            <%= link_to "クリア", root_path, class: "btn btn-light" %>
+          </div>
+        <% end %>
+      </div>
+      
+      <!-- 生徒一覧テーブル -->
+      <div class="student-table-wrapper">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>生徒名</th>
+              <th>年齢</th>
+              <th>保護者名</th>
+              <th>連絡先</th>
+              <th>月謝合計額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @students.each do |student| %>
+              <tr>
+                <td><%= link_to student.name, student_path(student) %></td>
+                <td><%= student.age %>歳</td>
+                <td><%= student.guardian_name %></td>
+                <td><%= student.phone_number %></td>
+                <td><%= number_to_currency(student.total_fee(@start_date, @end_date), unit: "¥", precision: 0) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     <% else %>
       <div class='account-page' id='account-page'>
