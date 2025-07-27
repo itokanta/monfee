@@ -7,16 +7,53 @@
       <%= f.date_select :entry, use_month_numbers:true, start_year:Time.now.year, end_year:1900, prompt:"--" %>
     </div>
   </div>
+  
+  <div class='field'>
+    <div class='field-label'>
+      <%= f.label :fee_plan_id, "月謝プラン"%>
+      <i>(プランを選択すると自動で金額が入力されます)</i>
+    </div>
+    <div class='field-input'>
+      <%= f.collection_select :fee_plan_id, @fee_plans, :id, :name, 
+                              { prompt: "プランを選択してください（または手動入力）" }, 
+                              { class: 'form-control', id: 'fee_plan_select' } %>
+    </div>
+  </div>
+  
   <div class='field'>
     <div class='field-label'>
       <%= f.label :fee, "料金"%>
       <i>(コンマ不要。数字のみ入力してください)</i>
     </div>
     <div class='field-input'>
-      <%= f.text_field :fee%>
+      <%= f.number_field :fee, class: 'form-control', id: 'fee_input' %>
     </div>
   </div>
+  
   <div class='actions'>
     <%= f.submit "登録", class: 'btn'%>
   </div>
 <% end %>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const feePlanSelect = document.getElementById('fee_plan_select');
+  const feeInput = document.getElementById('fee_input');
+  
+  // プランと金額のマッピング
+  const planAmounts = {
+    <% @fee_plans.each do |plan| %>
+      <%= plan.id %>: <%= plan.amount %>,
+    <% end %>
+  };
+  
+  feePlanSelect.addEventListener('change', function() {
+    const selectedPlanId = this.value;
+    if (selectedPlanId && planAmounts[selectedPlanId]) {
+      feeInput.value = planAmounts[selectedPlanId];
+    } else {
+      feeInput.value = '';
+    }
+  });
+});
+</script>
