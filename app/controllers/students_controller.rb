@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   
   def index
     if user_signed_in?
-      @student = Student.where(user_id: current_user.id)
+      @students = Student.where(user_id: current_user.id)
     end
   end
 
@@ -22,6 +22,7 @@ class StudentsController < ApplicationController
   end
 
   def show
+    @attendances = @student.attendances.includes(:fee_plan).order(entry: :desc)
   end
 
   def edit

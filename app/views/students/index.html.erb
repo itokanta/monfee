@@ -8,9 +8,177 @@
         <p>生徒名をクリックすると詳細画面へ移動します。</p>
         <p>詳細画面から月謝管理画面へ移動できます。</p>
       </div>
-      <div class="card__wrapper">
-        <%= render partial: 'student', collection: @student %>
+      
+      <!-- 月謝プラン管理へのリンク -->
+      <div style="margin-bottom: 20px;">
+        <%= link_to "月謝プラン管理", fee_plans_path, class: "btn btn-primary" %>
       </div>
+      
+      <!-- 期間指定フォーム -->
+      <div class="period-filter">
+        <div class="form-group">
+          <label for="index_start_date">開始日：</label>
+          <input type="date" id="index_start_date" class="form-control" style="width: auto; display: inline-block;">
+          <label for="index_end_date">終了日：</label>
+          <input type="date" id="index_end_date" class="form-control" style="width: auto; display: inline-block;">
+          <button type="button" id="index_apply_filter" class="btn btn-secondary">期間指定</button>
+          <button type="button" id="index_clear_filter" class="btn btn-light">クリア</button>
+        </div>
+      </div>
+      
+      <!-- 生徒一覧テーブル -->
+      <div class="student-table-wrapper">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>生徒名</th>
+              <th>年齢</th>
+              <th>保護者名</th>
+              <th>連絡先</th>
+              <th>月謝合計額</th>
+            </tr>
+          </thead>
+          <tbody id="students_tbody">
+            <% @students.each do |student| %>
+              <tr data-student-id="<%= student.id %>" data-total-fee="<%= student.total_fee %>">
+                <td><%= link_to student.name, student_path(student) %></td>
+                <td><%= student.age %>歳</td>
+                <td><%= student.guardian_name %></td>
+                <td><%= student.phone_number %></td>
+                <td class="amount-cell" data-original-amount="<%= student.total_fee %>">
+                  <%= number_to_currency(student.total_fee, unit: "¥", precision: 0) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const startDateFilter = document.getElementById('index_start_date');
+          const endDateFilter = document.getElementById('index_end_date');
+          const applyFilter = document.getElementById('index_apply_filter');
+          const clearFilter = document.getElementById('index_clear_filter');
+          const tbody = document.getElementById('students_tbody');
+          
+          // 全ての行を保存
+          const allRows = Array.from(tbody.getElementsByTagName('tr'));
+          
+          // 各生徒の月謝データを保存
+          const studentsData = {};
+          <% @students.each do |student| %>
+            studentsData[<%= student.id %>] = [
+              <% student.attendances.each do |attendance| %>
+                {
+                  date: '<%= attendance.entry.strftime('%Y-%m-%d') %>',
+                  fee: <%= attendance.fee %>
+                }<%= ',' unless attendance == student.attendances.last %>
+              <% end %>
+            ];
+          <% end %>
+          
+          function formatCurrency(amount) {
+            return '¥' + amount.toLocaleString();
+          }
+          
+          function calculateFilteredTotal(studentId, startDate, endDate) {
+            const attendances = studentsData[studentId] || [];
+            let total = 0;
+            
+            attendances.forEach(attendance => {
+              let shouldInclude = true;
+              
+              if (startDate && attendance.date < startDate) {
+                shouldInclude = false;
+              }
+              if (endDate && attendance.date > endDate) {
+                shouldInclude = false;
+              }
+              
+              if (shouldInclude) {
+                total += attendance.fee;
+              }
+            });
+            
+            return total;
+          }
+          
+          function applyDateFilter() {
+            const startDate = startDateFilter.value;
+            const endDate = endDateFilter.value;
+            
+            allRows.forEach(row => {
+              const studentId = parseInt(row.getAttribute('data-student-id'));
+              const amountCell = row.querySelector('.amount-cell');
+              
+              if (startDate || endDate) {
+                const filteredTotal = calculateFilteredTotal(studentId, startDate, endDate);
+                amountCell.textContent = formatCurrency(filteredTotal);
+              } else {
+                const originalAmount = parseInt(amountCell.getAttribute('data-original-amount'));
+                amountCell.textContent = formatCurrency(originalAmount);
+              }
+            });
+          }
+          
+          function clearDateFilter() {
+            startDateFilter.value = '';
+            endDateFilter.value = '';
+            
+            allRows.forEach(row => {
+              const amountCell = row.querySelector('.amount-cell');
+              const originalAmount = parseInt(amountCell.getAttribute('data-original-amount'));
+              amountCell.textContent = formatCurrency(originalAmount);
+            });
+          }
+          
+          function validateDates() {
+            const startDate = startDateFilter.value;
+            const endDate = endDateFilter.value;
+            
+            if (startDate && endDate && startDate > endDate) {
+              applyFilter.disabled = true;
+              applyFilter.textContent = '日付が無効';
+              applyFilter.style.backgroundColor = '#dc3545';
+              applyFilter.style.color = 'white';
+            } else {
+              applyFilter.disabled = false;
+              applyFilter.textContent = '期間指定';
+              applyFilter.style.backgroundColor = '';
+              applyFilter.style.color = '';
+            }
+          }
+          
+          // イベントリスナー
+          applyFilter.addEventListener('click', function() {
+            if (!applyFilter.disabled) {
+              applyDateFilter();
+            }
+          });
+          
+          clearFilter.addEventListener('click', clearDateFilter);
+          
+          startDateFilter.addEventListener('change', validateDates);
+          endDateFilter.addEventListener('change', validateDates);
+          
+          // Enterキーでフィルター適用
+          startDateFilter.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              applyDateFilter();
+            }
+          });
+          
+          endDateFilter.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              applyDateFilter();
+            }
+          });
+          
+          // 初期化
+          validateDates();
+        });
+      </script>
     <% else %>
       <div class='account-page' id='account-page'>
         <div class='account-page__inner clearfix'>

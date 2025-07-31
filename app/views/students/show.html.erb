@@ -1,18 +1,13 @@
 <div class="main">
   <div class="inner">
-    <div class="user__wrapper ">
-      <div>
+    <div class="student-detail-wrapper">
+      <div class="row">
+        <!-- 左カラム：生徒情報 -->
+        <div class="col-md-4">
         <h2 class="page-heading">
           <%= "#{@student.name}さんの情報"%>
         </h2>
-        <div class="edit_delete">
-          <%= link_to "編集", edit_student_path, class: :cell %>
-          <%= link_to "削除", student_path, method: :delete, class: :cell %>
-        </div>
-        <div class="management">
-          <%= link_to "月謝管理", student_attendances_path(@student), class: :cell %>
-        </div>
-      </div>
+          
       <table class="table">
         <tbody>
           <tr>
@@ -33,6 +28,199 @@
           </tr>
         </tbody>
       </table>
+          
+          <div class="action-buttons">
+            <%= link_to "編集", edit_student_path, class: "btn btn-primary" %>
+            <%= link_to "削除", student_path, method: :delete, class: "btn btn-danger", confirm: "本当に削除しますか？" %>
+            <%= link_to "月謝登録", new_student_attendance_path(@student), class: "btn btn-success" %>
+          </div>
+        </div>
+        
+        <!-- 右カラム：月謝一覧 -->
+        <div class="col-md-8">
+          <h3>月謝一覧</h3>
+          
+          <!-- 期間指定フォーム -->
+          <div class="period-filter" style="margin-bottom: 20px;">
+            <div class="form-group">
+              <label for="start_date_filter">開始日：</label>
+              <input type="date" id="start_date_filter" class="form-control" style="width: auto; display: inline-block;">
+              <label for="end_date_filter">終了日：</label>
+              <input type="date" id="end_date_filter" class="form-control" style="width: auto; display: inline-block;">
+              <button type="button" id="apply_filter" class="btn btn-secondary btn-sm">期間指定</button>
+              <button type="button" id="clear_filter" class="btn btn-light btn-sm">クリア</button>
+            </div>
+          </div>
+          
+          <!-- 合計金額表示 -->
+          <div class="total-amount" style="margin-bottom: 20px;">
+            <p id="total_amount_display">
+              <strong>これまでの合計金額は<%= number_to_currency(@student.total_fee, unit: "¥", precision: 0) %>です。</strong>
+            </p>
+          </div>
+          
+          <!-- 月謝一覧テーブル -->
+          <div class="attendance-table-wrapper">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>登録日</th>
+                  <th>プラン名</th>
+                  <th>金額</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="attendance_tbody">
+                <% @attendances.each do |attendance| %>
+                  <tr data-date="<%= attendance.entry.strftime('%Y-%m-%d') %>" data-amount="<%= attendance.fee %>">
+                    <td><%= attendance.entry.strftime("%Y/%m/%d") %></td>
+                    <td><%= attendance.fee_plan&.name || "手動入力" %></td>
+                    <td><%= number_to_currency(attendance.fee, unit: "¥", precision: 0) %></td>
+                    <td>
+                      <%= link_to "編集", edit_student_attendance_path(@student, attendance), class: "btn btn-sm btn-outline-primary" %>
+                      <%= link_to "削除", student_attendance_path(@student, attendance), method: :delete, 
+                                  class: "btn btn-sm btn-outline-danger", 
+                                  data: { confirm: "#{attendance.entry.strftime('%Y/%m/%d')}の月謝記録を削除しますか？\n※この操作は取り消せません。" } %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const startDateFilter = document.getElementById('start_date_filter');
+              const endDateFilter = document.getElementById('end_date_filter');
+              const applyFilter = document.getElementById('apply_filter');
+              const clearFilter = document.getElementById('clear_filter');
+              const totalAmountDisplay = document.getElementById('total_amount_display');
+              const tbody = document.getElementById('attendance_tbody');
+              
+              // 全ての行を保存
+              const allRows = Array.from(tbody.getElementsByTagName('tr'));
+              const originalTotal = <%= @student.total_fee %>;
+              
+              function formatCurrency(amount) {
+                return '¥' + amount.toLocaleString();
+              }
+              
+              function formatDate(dateStr) {
+                const date = new Date(dateStr);
+                return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+              }
+              
+              function applyDateFilter() {
+                const startDate = startDateFilter.value;
+                const endDate = endDateFilter.value;
+                let filteredTotal = 0;
+                let visibleCount = 0;
+                
+                allRows.forEach(row => {
+                  const rowDate = row.getAttribute('data-date');
+                  const rowAmount = parseInt(row.getAttribute('data-amount'));
+                  let shouldShow = true;
+                  
+                  if (startDate && rowDate < startDate) {
+                    shouldShow = false;
+                  }
+                  if (endDate && rowDate > endDate) {
+                    shouldShow = false;
+                  }
+                  
+                  if (shouldShow) {
+                    row.style.display = '';
+                    filteredTotal += rowAmount;
+                    visibleCount++;
+                  } else {
+                    row.style.display = 'none';
+                  }
+                });
+                
+                // 合計金額の表示を更新
+                if (startDate || endDate) {
+                  let dateText = '';
+                  if (startDate && endDate) {
+                    dateText = `${formatDate(startDate)}から${formatDate(endDate)}までの`;
+                  } else if (startDate) {
+                    dateText = `${formatDate(startDate)}以降の`;
+                  } else if (endDate) {
+                    dateText = `${formatDate(endDate)}以前の`;
+                  }
+                  totalAmountDisplay.innerHTML = `<strong>${dateText}合計金額は${formatCurrency(filteredTotal)}です。</strong>`;
+                } else {
+                  totalAmountDisplay.innerHTML = `<strong>これまでの合計金額は${formatCurrency(originalTotal)}です。</strong>`;
+                }
+                
+                // フィルター結果の件数表示
+                if (startDate || endDate) {
+                  if (visibleCount === 0) {
+                    totalAmountDisplay.innerHTML += '<br><small style="color: #666;">該当する記録がありません。</small>';
+                  } else {
+                    totalAmountDisplay.innerHTML += `<br><small style="color: #666;">${visibleCount}件の記録が見つかりました。</small>`;
+                  }
+                }
+              }
+              
+              function clearDateFilter() {
+                startDateFilter.value = '';
+                endDateFilter.value = '';
+                
+                allRows.forEach(row => {
+                  row.style.display = '';
+                });
+                
+                totalAmountDisplay.innerHTML = `<strong>これまでの合計金額は${formatCurrency(originalTotal)}です。</strong>`;
+              }
+              
+              function validateDates() {
+                const startDate = startDateFilter.value;
+                const endDate = endDateFilter.value;
+                
+                if (startDate && endDate && startDate > endDate) {
+                  applyFilter.disabled = true;
+                  applyFilter.textContent = '日付が無効';
+                  applyFilter.style.backgroundColor = '#dc3545';
+                  applyFilter.style.color = 'white';
+                } else {
+                  applyFilter.disabled = false;
+                  applyFilter.textContent = '期間指定';
+                  applyFilter.style.backgroundColor = '';
+                  applyFilter.style.color = '';
+                }
+              }
+              
+              // イベントリスナー
+              applyFilter.addEventListener('click', function() {
+                if (!applyFilter.disabled) {
+                  applyDateFilter();
+                }
+              });
+              
+              clearFilter.addEventListener('click', clearDateFilter);
+              
+              startDateFilter.addEventListener('change', validateDates);
+              endDateFilter.addEventListener('change', validateDates);
+              
+              // Enterキーでフィルター適用
+              startDateFilter.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                  applyDateFilter();
+                }
+              });
+              
+              endDateFilter.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                  applyDateFilter();
+                }
+              });
+              
+              // 初期化
+              validateDates();
+            });
+          </script>
+        </div>
+      </div>
     </div>
   </div>
 </div>

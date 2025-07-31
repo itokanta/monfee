@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_26_164151) do
+ActiveRecord::Schema.define(version: 2025_07_27_162123) do
 
   create_table "attendances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -18,7 +18,18 @@ ActiveRecord::Schema.define(version: 2021_06_26_164151) do
     t.date "entry", null: false
     t.integer "fee", null: false
     t.bigint "student_id"
+    t.bigint "fee_plan_id"
+    t.index ["fee_plan_id"], name: "index_attendances_on_fee_plan_id"
     t.index ["student_id"], name: "index_attendances_on_student_id"
+  end
+
+  create_table "fee_plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.integer "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_fee_plans_on_user_id"
   end
 
   create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -46,6 +57,8 @@ ActiveRecord::Schema.define(version: 2021_06_26_164151) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "attendances", "fee_plans"
   add_foreign_key "attendances", "students"
+  add_foreign_key "fee_plans", "users"
   add_foreign_key "students", "users"
 end
