@@ -83,14 +83,16 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin: 20px auto; /* 中央揃え */
+  max-width: 1000px; /* 最大幅を設定 */
 }
 
 .table th,
 .table td {
   padding: 12px;
-  text-align: left;
+  text-align: center; /* セル内容を中央揃え */
   border-bottom: 1px solid #dee2e6;
+  vertical-align: middle; /* 縦方向も中央揃え */
 }
 
 .table th {
@@ -100,6 +102,26 @@
 
 .table-striped tbody tr:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* テーブル全体のコンテナ */
+.student-table-wrapper,
+.attendance-table-wrapper,
+.fee-plans-table-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* 数値は右揃えに */
+.table td:last-child,
+.table td.amount {
+  text-align: right;
+}
+
+/* 操作ボタンは中央揃え */
+.table td .btn {
+  margin: 2px;
 }
 
 /* フォームスタイル */
