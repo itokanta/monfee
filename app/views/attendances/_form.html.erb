@@ -4,13 +4,14 @@
       <%= f.label :entry, "出席日"%>
     </div>
     <div class='field-input'>
-      <%= f.date_select :entry, use_month_numbers:true, start_year:Time.now.year, end_year:1900, prompt:"--" %>
+      <%= f.date_field :entry, class: 'form-control', id: 'entry_date' %>
     </div>
   </div>
   
   <div class='field'>
     <div class='field-label'>
       <%= f.label :fee_plan_id, "月謝プラン"%>
+      <span style="color: red;">*必須</span>
     </div>
     <div class='field-input'>
       <%= f.collection_select :fee_plan_id, @fee_plans, :id, :name, 
@@ -19,7 +20,7 @@
     </div>
   </div>
   
-  <!-- 金額は選択されたプランから自動設定されるため、表示のみ -->
+  <!-- 金額表示 -->
   <div class='field'>
     <div class='field-label'>
       料金（自動設定）
@@ -30,8 +31,20 @@
     </div>
   </div>
   
+  <!-- 期間計算表示 -->
+  <div class='field' id="date_info" style="display: none;">
+    <div class='field-label'>
+      期間情報
+    </div>
+    <div class='field-input'>
+      <div id="date_calculation" class="alert" style="background-color: #e7f3ff; border: 1px solid #b8daff; padding: 10px; border-radius: 4px;">
+        <!-- 日付情報がここに表示される -->
+      </div>
+    </div>
+  </div>
+  
   <div class='actions'>
-    <%= f.submit "登録", class: 'btn'%>
+    <%= f.submit "登録", class: 'btn btn-primary', id: 'submit_btn', disabled: true %>
   </div>
 <% end %>
 
@@ -40,26 +53,69 @@ document.addEventListener('DOMContentLoaded', function() {
   const feePlanSelect = document.getElementById('fee_plan_select');
   const feeInput = document.getElementById('fee_input');
   const feeDisplay = document.getElementById('fee_display');
+  const entryDate = document.getElementById('entry_date');
+  const dateInfo = document.getElementById('date_info');
+  const dateCalculation = document.getElementById('date_calculation');
+  const submitBtn = document.getElementById('submit_btn');
   
-  if (feePlanSelect && feeInput && feeDisplay) {
-    // プランと金額のマッピング
-    const planAmounts = {
-      <% @fee_plans.each do |plan| %>
-        '<%= plan.id %>': <%= plan.amount %><%= ',' unless plan == @fee_plans.last %>
-      <% end %>
-    };
+  // プランと金額のマッピング
+  const planAmounts = {
+    <% @fee_plans.each do |plan| %>
+      '<%= plan.id %>': {
+        amount: <%= plan.amount %>,
+        name: '<%= plan.name %>'
+      }<%= ',' unless plan == @fee_plans.last %>
+    <% end %>
+  };
+  
+  function updateForm() {
+    const selectedPlanId = feePlanSelect.value;
+    const selectedDate = entryDate.value;
     
-    feePlanSelect.addEventListener('change', function() {
-      const selectedPlanId = this.value;
-      if (selectedPlanId && planAmounts[selectedPlanId]) {
-        const amount = planAmounts[selectedPlanId];
-        feeInput.value = amount;
-        feeDisplay.value = '¥' + amount.toLocaleString();
+    // 金額の更新
+    if (selectedPlanId && planAmounts[selectedPlanId]) {
+      const plan = planAmounts[selectedPlanId];
+      feeInput.value = plan.amount;
+      feeDisplay.value = '¥' + plan.amount.toLocaleString();
+    } else {
+      feeInput.value = '';
+      feeDisplay.value = '';
+    }
+    
+    // 日付情報の更新
+    if (selectedDate && selectedPlanId) {
+      const date = new Date(selectedDate);
+      const today = new Date();
+      const diffTime = Math.abs(today - date);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      let dateText = `選択日: ${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+      
+      if (date > today) {
+        dateText += ` (${diffDays}日後)`;
+      } else if (date < today) {
+        dateText += ` (${diffDays}日前)`;
       } else {
-        feeInput.value = '';
-        feeDisplay.value = '';
+        dateText += ' (今日)';
       }
-    });
+      
+      dateText += `<br>プラン: ${planAmounts[selectedPlanId].name}`;
+      
+      dateCalculation.innerHTML = dateText;
+      dateInfo.style.display = 'block';
+    } else {
+      dateInfo.style.display = 'none';
+    }
+    
+    // 送信ボタンの有効/無効
+    submitBtn.disabled = !(selectedPlanId && selectedDate);
   }
+  
+  // イベントリスナー
+  feePlanSelect.addEventListener('change', updateForm);
+  entryDate.addEventListener('change', updateForm);
+  
+  // 初期化
+  updateForm();
 });
 </script>

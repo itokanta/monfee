@@ -5,10 +5,6 @@ class StudentsController < ApplicationController
   def index
     if user_signed_in?
       @students = Student.where(user_id: current_user.id)
-      
-      # 期間指定のパラメータを取得
-      @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : nil
-      @end_date = params[:end_date].present? ? Date.parse(params[:end_date]) : nil
     end
   end
 
@@ -27,14 +23,6 @@ class StudentsController < ApplicationController
 
   def show
     @attendances = @student.attendances.includes(:fee_plan).order(entry: :desc)
-    
-    # 期間指定のパラメータを取得
-    @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : nil
-    @end_date = params[:end_date].present? ? Date.parse(params[:end_date]) : nil
-    
-    if @start_date && @end_date
-      @attendances = @attendances.where(entry: @start_date..@end_date)
-    end
   end
 
   def edit
