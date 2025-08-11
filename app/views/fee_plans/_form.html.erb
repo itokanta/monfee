@@ -1,0 +1,34 @@
+<%= form_with model: fee_plan, local: true do |f| %>
+  <% if fee_plan.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% fee_plan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class='field'>
+    <div class='field-label'>
+      <%= f.label :name, "プラン名" %>
+    </div>
+    <div class='field-input'>
+      <%= f.text_field :name, placeholder: fee_plan.persisted? ? nil : "例：月4回コース" %>
+    </div>
+  </div>
+  
+  <div class='field'>
+    <div class='field-label'>
+      <%= f.label :amount, "金額（円）" %>
+    </div>
+    <div class='field-input'>
+      <%= f.number_field :amount, placeholder: fee_plan.persisted? ? nil : "例：8000" %>
+    </div>
+  </div>
+  
+  <div class='actions'>
+    <%= f.submit fee_plan.persisted? ? "更新" : "作成", class: 'btn btn-primary' %>
+    <%= link_to "戻る", fee_plans_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>
