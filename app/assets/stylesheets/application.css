@@ -236,6 +236,17 @@
   padding-left: 20px;
 }
 
+/* Deviseリンクスタイル */
+.devise-links a {
+  color: #37AEF0 !important;
+  text-decoration: none;
+}
+
+.devise-links a:hover {
+  color: #2a8bc0 !important;
+  text-decoration: underline;
+}
+
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
   .row {
