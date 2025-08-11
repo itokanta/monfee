@@ -40,6 +40,18 @@
 /* 共通のアウトラインボタンスタイル（グレー） */
 .btn-primary,
 .btn-success,
+.btn-outline-primary {
+  background-color: transparent;
+  color: #37AEF0;
+  border: 1px solid #37AEF0;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-outline-primary:hover {
+  opacity: 0.5;
+}
+
 .btn-danger,
 .btn-outline-danger {
   background-color: transparent;
@@ -47,9 +59,20 @@
   border: 1px solid #6C757D;
 }
 
+.btn-danger:hover,
+.btn-outline-danger:hover {
+  background-color: #FF4B00;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
 .btn-secondary {
   background-color: #6c757d;
   color: white;
+}
+
+.btn-secondary:hover {
+  opacity: 0.5;
 }
 
 .btn-light {
@@ -58,10 +81,8 @@
   border: 1px solid #dee2e6;
 }
 
-.btn-outline-primary {
-  background-color: transparent;
-  color: #37AEF0;
-  border: 1px solid #37AEF0;
+.btn-light:hover {
+  opacity: 0.5;
 }
 
 .btn-sm {

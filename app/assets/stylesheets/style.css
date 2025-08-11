@@ -74,8 +74,7 @@ a {
 }
 
 .nav__btn:hover{
-  color: #fff;
-  background: #87CEFA;
+  opacity: 0.5;
 }
 
 .nav__logout{
