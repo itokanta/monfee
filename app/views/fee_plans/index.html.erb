@@ -18,8 +18,8 @@
           <% @fee_plans.each do |fee_plan| %>
             <tr>
               <td><%= fee_plan.name %></td>
-              <td><%= number_to_currency(fee_plan.amount, unit: "¥", precision: 0) %></td>
-              <td>
+              <td class="amount-cell"><%= number_to_currency(fee_plan.amount, unit: "¥", precision: 0) %></td>
+              <td class="center">
                 <%= link_to "編集", edit_fee_plan_path(fee_plan), class: "btn btn-sm btn-outline-primary" %>
                 <%= link_to "削除", fee_plan_path(fee_plan), method: :delete, 
                             class: "btn btn-sm btn-outline-danger", 

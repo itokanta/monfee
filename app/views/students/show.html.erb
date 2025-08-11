@@ -32,7 +32,7 @@
           <div class="action-buttons">
             <%= link_to "編集", edit_student_path, class: "btn btn-primary" %>
             <%= link_to "削除", student_path, method: :delete, class: "btn btn-danger", confirm: "本当に削除しますか？" %>
-            <%= link_to "月謝プラン登録", new_student_attendance_path(@student), class: "btn btn-success" %>
+            <%= link_to "出席登録", new_student_attendance_path(@student), class: "btn btn-success" %>
           </div>
         </div>
         
@@ -75,8 +75,8 @@
                   <tr data-date="<%= attendance.entry.strftime('%Y-%m-%d') %>" data-amount="<%= attendance.fee %>">
                     <td><%= attendance.entry.strftime("%Y/%m/%d") %></td>
                     <td><%= attendance.fee_plan&.name || "手動入力" %></td>
-                    <td><%= number_to_currency(attendance.fee, unit: "¥", precision: 0) %></td>
-                    <td>
+                    <td class="amount-cell"><%= number_to_currency(attendance.fee, unit: "¥", precision: 0) %></td>
+                    <td class="center">
                       <%= link_to "編集", edit_student_attendance_path(@student, attendance), class: "btn btn-sm btn-outline-primary" %>
                       <%= link_to "削除", student_attendance_path(@student, attendance), method: :delete, 
                                   class: "btn btn-sm btn-outline-danger", 
