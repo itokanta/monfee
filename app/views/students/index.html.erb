@@ -5,8 +5,9 @@
         <h1><%= "#{current_user.school_name}生徒一覧"%></h1>
       </div>
       
-      <!-- 月謝プラン管理へのリンク -->
-      <div style="margin-bottom: 20px;">
+      <!-- アクションボタン -->
+      <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+        <%= link_to "生徒登録", new_student_path, class: "btn btn-success" %>
         <%= link_to "月謝プラン管理", fee_plans_path, class: "btn btn-primary" %>
       </div>
       
