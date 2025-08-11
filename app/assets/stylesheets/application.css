@@ -10,7 +10,8 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ *= require style
+ *= require user
  *= require_self
  */
 
@@ -20,7 +21,7 @@
 }
 
 .inner {
-  max-width: 1200px;
+  max-width: 1024px;
   margin: 0 auto;
 }
 
@@ -36,9 +37,33 @@
   font-size: 14px;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  color: white;
+/* 共通のアウトラインボタンスタイル（グレー） */
+.btn-primary,
+.btn-success,
+.btn-outline-primary {
+  background-color: transparent;
+  color: #37AEF0;
+  border: 1px solid #37AEF0;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-outline-primary:hover {
+  opacity: 0.5;
+}
+
+.btn-danger,
+.btn-outline-danger {
+  background-color: transparent;
+  color: #6C757D;
+  border: 1px solid #6C757D;
+}
+
+.btn-danger:hover,
+.btn-outline-danger:hover {
+  background-color: #FF4B00;
+  color: #ffffff;
+  border: 1px solid #ffffff;
 }
 
 .btn-secondary {
@@ -46,14 +71,8 @@
   color: white;
 }
 
-.btn-success {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: white;
+.btn-secondary:hover {
+  opacity: 0.5;
 }
 
 .btn-light {
@@ -62,16 +81,8 @@
   border: 1px solid #dee2e6;
 }
 
-.btn-outline-primary {
-  background-color: transparent;
-  color: #007bff;
-  border: 1px solid #007bff;
-}
-
-.btn-outline-danger {
-  background-color: transparent;
-  color: #dc3545;
-  border: 1px solid #dc3545;
+.btn-light:hover {
+  opacity: 0.5;
 }
 
 .btn-sm {
@@ -113,15 +124,14 @@
   margin: 20px 0;
 }
 
-/* 数値は右揃えに */
-.table td:last-child,
-.table td.amount {
-  text-align: right;
+/* 操作ボタンのセルを中央揃えに */
+.table td.center {
+  text-align: center !important;
 }
 
-/* 操作ボタンは中央揃え */
-.table td .btn {
-  margin: 2px;
+/* 金額セルを中央揃えに */
+.table td.amount-cell {
+  text-align: center !important;
 }
 
 /* フォームスタイル */
@@ -139,15 +149,6 @@
 
 .field {
   margin-bottom: 20px;
-}
-
-.field-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.field-input {
-  margin-bottom: 10px;
 }
 
 /* 期間指定フォーム */

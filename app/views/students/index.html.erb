@@ -2,11 +2,7 @@
   <div class="inner">
     <% if user_signed_in? %>
       <div class="greeting">
-        <h1 class="greeting__link">
-          <%= "#{current_user.school_name}生徒一覧"%>
-        </h1>
-        <p>生徒名をクリックすると詳細画面へ移動します。</p>
-        <p>詳細画面から月謝管理画面へ移動できます。</p>
+        <h1><%= "#{current_user.school_name}生徒一覧"%></h1>
       </div>
       
       <!-- 月謝プラン管理へのリンク -->
@@ -36,17 +32,22 @@
               <th>保護者名</th>
               <th>連絡先</th>
               <th>月謝合計額</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody id="students_tbody">
             <% @students.each do |student| %>
               <tr data-student-id="<%= student.id %>" data-total-fee="<%= student.total_fee %>">
-                <td><%= link_to student.name, student_path(student) %></td>
+                <td><%= student.name%></td>
                 <td><%= student.age %>歳</td>
                 <td><%= student.guardian_name %></td>
                 <td><%= student.phone_number %></td>
                 <td class="amount-cell" data-original-amount="<%= student.total_fee %>">
                   <%= number_to_currency(student.total_fee, unit: "¥", precision: 0) %>
+                </td>
+                <td>
+                  <%= link_to "詳細", student_path(student), class: "btn btn-success btn-sm me-1" %>
+                  <%= link_to "出席登録", new_student_attendance_path(student), class: "btn btn-success btn-sm" %>
                 </td>
               </tr>
             <% end %>
