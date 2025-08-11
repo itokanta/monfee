@@ -54,8 +54,8 @@
 
 .btn-danger,
 .btn-outline-danger {
-  background-color: transparent;
-  color: #6C757D;
+  background-color: #6c757d;
+  color: white;
   border: 1px solid #6C757D;
 }
 
@@ -193,11 +193,16 @@
 
 .action-buttons {
   margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .action-buttons .btn {
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 /* 合計金額表示 */
