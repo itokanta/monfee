@@ -99,10 +99,6 @@ a {
   border-bottom: 3px solid #ff7f50;
 }
 
-.greeting__link{
-  text-decoration: underline;
-}
-
 .page-heading {
   font-size: 30px;
   margin-bottom: 28px;
