@@ -3,7 +3,7 @@
     <div class='account-page__inner--left account-page__header'>
       <h2>Attendance Edit</h2>
       <h5>出席・料金編集</h5>
-      <%= link_to "削除", student_attendance_path, method: :delete, class: :cell %>
+      <%= link_to "削除", student_attendance_path, method: :delete, class: :cell, data: { confirm: "この出席記録を削除しますか？\n※この操作は取り消せません。" } %>
     </div>
     <div class='account-page__inner--right user-form'>
       <%= render partial: "form", locals: { student: @student, attendance: @attendance } %>

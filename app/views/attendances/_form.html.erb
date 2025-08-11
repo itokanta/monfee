@@ -1,7 +1,7 @@
 <%= form_with model: [student, attendance], local: true do |f|%>
   <div class='field'>
     <div class='field-label'>
-      <%= f.label :entry, "出席日"%>
+      <%= f.label :entry, "出席日", for: 'entry_date' %>
     </div>
     <div class='field-input'>
       <%= f.date_field :entry, class: 'form-control', id: 'entry_date' %>
@@ -10,7 +10,7 @@
   
   <div class='field'>
     <div class='field-label'>
-      <%= f.label :fee_plan_id, "月謝プラン"%>
+      <%= f.label :fee_plan_id, "月謝プラン", for: 'fee_plan_select' %>
       <span style="color: red;">*必須</span>
     </div>
     <div class='field-input'>
@@ -23,7 +23,7 @@
   <!-- 金額表示 -->
   <div class='field'>
     <div class='field-label'>
-      料金（自動設定）
+      <label for="fee_display">料金（自動設定）</label>
     </div>
     <div class='field-input'>
       <input type="text" id="fee_display" class="form-control" readonly placeholder="プランを選択すると表示されます">
@@ -49,7 +49,7 @@
 <% end %>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('turbolinks:load', function() {
   const feePlanSelect = document.getElementById('fee_plan_select');
   const feeInput = document.getElementById('fee_input');
   const feeDisplay = document.getElementById('fee_display');
