@@ -10,7 +10,8 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ *= require style
+ *= require user
  *= require_self
  */
 
@@ -20,7 +21,7 @@
 }
 
 .inner {
-  max-width: 1200px;
+  max-width: 1024px;
   margin: 0 auto;
 }
 
@@ -36,7 +37,11 @@
   font-size: 14px;
 }
 
-.btn-primary {
+/* 共通のアウトラインボタンスタイル（グレー） */
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-outline-danger {
   background-color: transparent;
   color: #6C757D;
   border: 1px solid #6C757D;
@@ -45,18 +50,6 @@
 .btn-secondary {
   background-color: #6c757d;
   color: white;
-}
-
-.btn-success {
-  background-color: transparent;
-  color: #6C757D;
-  border: 1px solid #6C757D;
-}
-
-.btn-danger {
-  background-color: transparent;
-  color: #6C757D;
-  border: 1px solid #6C757D;
 }
 
 .btn-light {
@@ -69,12 +62,6 @@
   background-color: transparent;
   color: #37AEF0;
   border: 1px solid #37AEF0;
-}
-
-.btn-outline-danger {
-  background-color: transparent;
-  color: #6C757D;
-  border: 1px solid #6C757D;
 }
 
 .btn-sm {
@@ -116,11 +103,6 @@
   margin: 20px 0;
 }
 
-/* テーブル内のボタン
-.table td .btn {
-  margin: 2px;
-} */
-
 /* 操作ボタンのセルを中央揃えに */
 .table td.center {
   text-align: center !important;
@@ -146,15 +128,6 @@
 
 .field {
   margin-bottom: 20px;
-}
-
-.field-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.field-input {
-  margin-bottom: 10px;
 }
 
 /* 期間指定フォーム */
