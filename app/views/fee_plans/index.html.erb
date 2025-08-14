@@ -21,9 +21,9 @@
               <td class="amount-cell"><%= number_to_currency(fee_plan.amount, unit: "¥", precision: 0) %></td>
               <td class="center">
                 <%= link_to "編集", edit_fee_plan_path(fee_plan), class: "btn btn-sm btn-outline-primary" %>
-                <%= link_to "削除", fee_plan_path(fee_plan), method: :delete, 
+                <%= link_to "削除", fee_plan_path(fee_plan), 
                             class: "btn btn-sm btn-outline-danger", 
-                            data: { confirm: "本当に削除しますか？" } %>
+                            data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
               </td>
             </tr>
           <% end %>

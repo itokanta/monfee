@@ -45,12 +45,12 @@
   
   <div class='actions'>
     <%= f.submit attendance.persisted? ? "更新" : "登録", class: 'btn btn-primary', id: 'submit_btn', disabled: true %>
-    <%= link_to "戻る", student_path(student), class: 'btn btn-secondary' %>
+    <%= link_to "戻る", get_back_path(request.referer, student), class: 'btn btn-secondary' %>
   </div>
 <% end %>
 
 <script>
-document.addEventListener('turbolinks:load', function() {
+document.addEventListener('turbo:load', function() {
   const feePlanSelect = document.getElementById('fee_plan_select');
   const feeInput = document.getElementById('fee_input');
   const feeDisplay = document.getElementById('fee_display');

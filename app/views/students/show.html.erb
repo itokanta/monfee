@@ -32,7 +32,7 @@
           <div class="action-buttons">
             <%= link_to "編集", edit_student_path, class: "btn btn-primary" %>
             <%= link_to "出席登録", new_student_attendance_path(@student), class: "btn btn-success" %>
-            <%= link_to "削除", student_path, method: :delete, class: "btn btn-danger", data: { confirm: "本当に削除しますか？" } %>
+            <%= link_to "削除", student_path, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
             <%= link_to "一覧へ戻る", root_path, class: "btn btn-secondary" %>
           </div>
         </div>
@@ -79,9 +79,9 @@
                     <td class="amount-cell"><%= number_to_currency(attendance.fee, unit: "¥", precision: 0) %></td>
                     <td class="center">
                       <%= link_to "編集", edit_student_attendance_path(@student, attendance), class: "btn btn-sm btn-outline-primary" %>
-                      <%= link_to "削除", student_attendance_path(@student, attendance), method: :delete, 
+                      <%= link_to "削除", student_attendance_path(@student, attendance), 
                                   class: "btn btn-sm btn-outline-danger", 
-                                  data: { confirm: "#{attendance.entry.strftime('%Y/%m/%d')}の月謝記録を削除しますか？\n※この操作は取り消せません。" } %>
+                                  data: { turbo_method: :delete, turbo_confirm: "#{attendance.entry.strftime('%Y/%m/%d')}の月謝記録を削除しますか？\n※この操作は取り消せません。" } %>
                     </td>
                   </tr>
                 <% end %>
@@ -90,7 +90,7 @@
           </div>
 
           <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('turbo:load', function() {
               const startDateFilter = document.getElementById('start_date_filter');
               const endDateFilter = document.getElementById('end_date_filter');
               const applyFilter = document.getElementById('apply_filter');
