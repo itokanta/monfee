@@ -75,7 +75,7 @@
                 <% @attendances.each do |attendance| %>
                   <tr data-date="<%= attendance.entry.strftime('%Y-%m-%d') %>" data-amount="<%= attendance.fee %>">
                     <td><%= attendance.entry.strftime("%Y/%m/%d") %></td>
-                    <td><%= attendance.fee_plan&.name || "手動入力" %></td>
+                    <td><%= attendance.fee_plan_name || attendance.fee_plan&.name || "手動入力" %></td>
                     <td class="amount-cell"><%= number_to_currency(attendance.fee, unit: "¥", precision: 0) %></td>
                     <td class="center">
                       <%= link_to "編集", edit_student_attendance_path(@student, attendance), class: "btn btn-sm btn-outline-primary" %>
