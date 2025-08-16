@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_27_162123) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_15_010040) do
   create_table "attendances", charset: "utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_27_162123) do
     t.integer "fee", null: false
     t.bigint "student_id"
     t.bigint "fee_plan_id"
+    t.string "fee_plan_name"
     t.index ["fee_plan_id"], name: "index_attendances_on_fee_plan_id"
     t.index ["student_id"], name: "index_attendances_on_student_id"
   end

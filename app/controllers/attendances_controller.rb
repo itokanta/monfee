@@ -1,17 +1,10 @@
 class AttendancesController < ApplicationController
   before_action :authenticate_user!
   before_action :student_choose
-  before_action :student_entry, only:[:index, :search]
+
   before_action :attendance_choose, only:[:edit, :update, :destroy]
   before_action :set_fee_plans, only:[:new, :create, :edit, :update]
 
-  def index
-  end
-
-  def search
-    @q = @attendance.ransack(params[:q])
-    @sum = @q.result
-  end
 
   def new
     @attendance = Attendance.new
@@ -60,6 +53,8 @@ class AttendancesController < ApplicationController
     if params[:attendance][:fee_plan_id].present?
       fee_plan = current_user.fee_plans.find(params[:attendance][:fee_plan_id])
       attendance.fee = fee_plan.amount
+      attendance.fee_plan = fee_plan
+      # fee_plan_nameはモデルのbefore_saveコールバックで自動設定される
       return true
     else
       attendance.errors.add(:fee_plan_id, 'を選択してください')
@@ -69,12 +64,9 @@ class AttendancesController < ApplicationController
   end
   
   def attendance_params
-    params.require(:attendance).permit(:entry, :fee, :fee_plan_id).merge(student_id: params[:student_id])
+    params.require(:attendance).permit(:entry, :fee, :fee_plan_id, :fee_plan_name).merge(student_id: params[:student_id])
   end
 
-  def student_entry
-    @attendance = Attendance.where(student_id: params[:student_id])
-  end
 
   def student_choose
     @student = Student.find(params[:student_id])
