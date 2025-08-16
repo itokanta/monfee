@@ -11,9 +11,20 @@ ja:
               not_a_number: "は数値で入力してください。"
               greater_than_or_equal_to: "は%{count}以上の値にしてください。"
               blank: "を入力してください。"
+        attendance:
+          attributes:
+            entry:
+              blank: "を入力してください。"
+            fee_plan_id:
+              blank: "を選択してください。"
     attributes:
       fee_plan:
         name: "プラン名"
         amount: "金額"
+      attendance:
+        entry: "出席日"
+        fee_plan_id: "月謝プラン"
+        fee: "料金"
     models:
       fee_plan: "月謝プラン"
+      attendance: "出席記録"
