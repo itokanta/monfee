@@ -5,48 +5,59 @@
       <h5>新規アカウントの作成</h5>
     </div>
     <div class='account-page__inner--right user-form'>
-      <%= form_with model: @user, url: user_registration_path, local: true do |f|%>
-        <%= devise_error_messages!%>
+      <%= form_with model: @user, url: user_registration_path, local: true, data: { turbo: false }, html: { id: 'new_user' } do |f|%>
+        <% if @user.errors.any? || flash[:alert] %>
+          <div class="alert alert-danger">
+            <ul>
+              <% if flash[:alert] %>
+                <li><%= flash[:alert] %></li>
+              <% end %>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
         <div class='field'>
           <div class='field-label'>
-            <%= f.label :name%>
+            <%= f.label :name, class: (@user.errors[:name].any? ? 'field_with_errors' : '') %>
           </div>
           <div class='field-input'>
-            <%= f.text_field :name%>
+            <%= f.text_field :name, class: (@user.errors[:name].any? ? 'field_with_errors' : '') %>
           </div>
         </div>
         <div class='field'>
           <div class='field-label'>
-            <%= f.label :school_name%>
+            <%= f.label :school_name, class: (@user.errors[:school_name].any? ? 'field_with_errors' : '') %>
             <i>(教室名)</i>
           </div>
           <div class='field-input'>
-            <%= f.text_field :school_name%>
+            <%= f.text_field :school_name, class: (@user.errors[:school_name].any? ? 'field_with_errors' : '') %>
           </div>
         </div>
         <div class='field'>
           <div class='field-label'>
-            <%= f.label :email%>
+            <%= f.label :email, class: (@user.errors[:email].any? ? 'field_with_errors' : '') %>
           </div>
           <div class='field-input'>
-            <%= f.email_field :email%>
+            <%= f.email_field :email, class: (@user.errors[:email].any? ? 'field_with_errors' : '') %>
           </div>
         </div>
         <div class='field'>
           <div class='field-label'>
-            <%= f.label :password%>
+            <%= f.label :password, class: (@user.errors[:password].any? ? 'field_with_errors' : '') %>
             <i>(英数字6文字以上)</i>
           </div>
           <div class='field-input'>
-            <%= f.password_field :password, autocomplete: "off"%>
+            <%= f.password_field :password, autocomplete: "off", class: (@user.errors[:password].any? ? 'field_with_errors' : '') %>
           </div>
         </div>
         <div class='field'>
           <div class='field-label'>
-            <%= f.label :password_confirmation%>
+            <%= f.label :password_confirmation, class: (@user.errors[:password_confirmation].any? ? 'field_with_errors' : '') %>
           </div>
           <div class='field-input'>
-            <%= f.password_field :password_confirmation, autocomplete: "off"%>
+            <%= f.password_field :password_confirmation, autocomplete: "off", class: (@user.errors[:password_confirmation].any? ? 'field_with_errors' : '') %>
           </div>
         </div>
         <div class='actions'>
