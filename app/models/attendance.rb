@@ -3,7 +3,7 @@ class Attendance < ApplicationRecord
   belongs_to :fee_plan, optional: true
 
   validates :entry, presence: true
-  validates :fee, presence: true
+  validates :fee_plan_id, presence: true
 
   before_save :set_fee_plan_name
 

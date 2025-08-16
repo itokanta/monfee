@@ -1,4 +1,14 @@
-<%= form_with model: [student, attendance], local: true do |f|%>
+<%= form_with model: [student, attendance], local: true, data: { turbo: false } do |f|%>
+  <% if attendance.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% attendance.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
   <div class='field'>
     <div class='field-label'>
       <%= f.label :entry, "出席日", for: 'entry_date' %>
@@ -11,12 +21,11 @@
   <div class='field'>
     <div class='field-label'>
       <%= f.label :fee_plan_id, "月謝プラン", for: 'fee_plan_select' %>
-      <span style="color: red;">*必須</span>
     </div>
     <div class='field-input'>
       <%= f.collection_select :fee_plan_id, @fee_plans, :id, :name, 
                               { prompt: "月謝プランを選択してください" }, 
-                              { class: 'form-control', id: 'fee_plan_select', required: true } %>
+                              { class: 'form-control', id: 'fee_plan_select' } %>
     </div>
   </div>
   
@@ -44,7 +53,7 @@
   </div>
   
   <div class='actions'>
-    <%= f.submit attendance.persisted? ? "更新" : "登録", class: 'btn btn-primary', id: 'submit_btn', disabled: true %>
+    <%= f.submit attendance.persisted? ? "更新" : "登録", class: 'btn btn-primary', id: 'submit_btn' %>
     <%= link_to "戻る", get_back_path(request.referer, student), class: 'btn btn-secondary' %>
   </div>
 <% end %>
@@ -108,8 +117,8 @@ document.addEventListener('turbo:load', function() {
       dateInfo.style.display = 'none';
     }
     
-    // 送信ボタンの有効/無効
-    submitBtn.disabled = !(selectedPlanId && selectedDate);
+    // 送信ボタンは常に有効（サーバーサイドバリデーションに任せる）
+    // submitBtn.disabled = !(selectedPlanId && selectedDate);
   }
   
   // イベントリスナー

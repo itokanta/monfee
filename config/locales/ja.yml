@@ -1,4 +1,54 @@
 ja:
+  devise:
+    failure:
+      invalid: "メールアドレスまたはパスワードが違います。"
+      not_found_in_database: "メールアドレスまたはパスワードが違います。"
+      unauthenticated: "アカウント登録もしくはログインしてください。"
+      unconfirmed: "メールアドレスの本人確認が必要です。"
+      locked: "あなたのアカウントは凍結されています。"
+      invalid_token: "認証キーが不正です。"
+      timeout: "セッションがタイムアウトしました。もう一度ログインしてください。"
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+    registrations:
+      signed_up: "アカウント登録が完了しました。"
+      updated: "アカウント情報を変更しました。"
+      destroyed: "アカウントを削除しました。またのご利用をお待ちしております。"
+    passwords:
+      send_instructions: "パスワードの再設定について数分以内にメールでご連絡いたします。"
+      updated: "パスワードが正しく変更されました。"
+      updated_not_active: "パスワードが正しく変更されました。"
+      send_paranoid_instructions: "あなたのメールアドレスが登録済みの場合、パスワード再設定用のメールが数分以内に送信されます。"
+    confirmations:
+      send_instructions: "アカウントの有効化について数分以内にメールでご連絡します。"
+      send_paranoid_instructions: "メールアドレスが登録済みの場合、本人確認用のメールが数分以内に送信されます。"
+      confirmed: "メールアドレスが確認できました。"
+    unlocks:
+      send_instructions: "アカウントの凍結解除について数分以内にメールでご連絡します。"
+      send_paranoid_instructions: "アカウントが見つかった場合、アカウントの凍結解除について数分以内にメールでご連絡します。"
+      unlocked: "アカウントを凍結解除しました。"
+    omniauth_callbacks:
+      success: "%{kind} アカウントによる認証に成功しました。"
+      failure: "%{kind} アカウントによる認証に失敗しました。理由：（%{reason}）"
+    mailer:
+      confirmation_instructions:
+        subject: "アカウント確認手順"
+      reset_password_instructions:
+        subject: "パスワード再設定手順"
+      unlock_instructions:
+        subject: "アカウント凍結解除手順"
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: "が入力されていません"
+      too_short: "は%{count}文字以上で入力してください"
+      too_long: "は%{count}文字以内で入力してください"
+      invalid: "は不正な値です"
+      confirmation: "が一致しません"
+      taken: "はすでに存在します"
+      not_a_number: "は数値で入力してください"
+      greater_than_or_equal_to: "は%{count}以上の値にしてください"
   activerecord:
     errors:
       models:
@@ -11,9 +61,58 @@ ja:
               not_a_number: "は数値で入力してください。"
               greater_than_or_equal_to: "は%{count}以上の値にしてください。"
               blank: "を入力してください。"
+        attendance:
+          attributes:
+            entry:
+              blank: "を入力してください。"
+            fee_plan_id:
+              blank: "を選択してください。"
+        student:
+          attributes:
+            name:
+              blank: "を入力してください。"
+            age:
+              blank: "を入力してください。"
+            guardian_name:
+              blank: "を入力してください。"
+            phone_number:
+              blank: "を入力してください。"
+        user:
+          attributes:
+            name:
+              blank: "を入力してください。"
+            school_name:
+              blank: "を入力してください。"
+            email:
+              blank: "を入力してください。"
+              invalid: "の形式が正しくありません。"
+              taken: "は既に使用されています。"
+            password:
+              blank: "を入力してください。"
+              too_short: "は%{count}文字以上で入力してください。"
+            password_confirmation:
+              confirmation: "が一致しません。"
     attributes:
       fee_plan:
         name: "プラン名"
         amount: "金額"
+      attendance:
+        entry: "出席日"
+        fee_plan_id: "月謝プラン"
+        fee: "料金"
+      student:
+        name: "生徒名"
+        age: "年齢"
+        guardian_name: "保護者名"
+        phone_number: "電話番号"
+      user:
+        name: "名前"
+        school_name: "教室名"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
     models:
       fee_plan: "月謝プラン"
+      attendance: "出席記録"
+      student: "生徒"
+      user: "ユーザー"
