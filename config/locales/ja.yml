@@ -1,0 +1,19 @@
+ja:
+  activerecord:
+    errors:
+      models:
+        fee_plan:
+          attributes:
+            name:
+              taken: "は既に存在しています。"
+              blank: "を入力してください。"
+            amount:
+              not_a_number: "は数値で入力してください。"
+              greater_than_or_equal_to: "は%{count}以上の値にしてください。"
+              blank: "を入力してください。"
+    attributes:
+      fee_plan:
+        name: "プラン名"
+        amount: "金額"
+    models:
+      fee_plan: "月謝プラン"
