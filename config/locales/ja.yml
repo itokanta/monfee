@@ -1,4 +1,11 @@
 ja:
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: "が入力されていません"
+      too_short: "は%{count}文字以上で入力してください"
+      too_long: "は%{count}文字以内で入力してください"
+      invalid: "は不正な値です"
   activerecord:
     errors:
       models:
@@ -17,6 +24,16 @@ ja:
               blank: "を入力してください。"
             fee_plan_id:
               blank: "を選択してください。"
+        student:
+          attributes:
+            name:
+              blank: "を入力してください。"
+            age:
+              blank: "を入力してください。"
+            guardian_name:
+              blank: "を入力してください。"
+            phone_number:
+              blank: "を入力してください。"
     attributes:
       fee_plan:
         name: "プラン名"
@@ -25,6 +42,12 @@ ja:
         entry: "出席日"
         fee_plan_id: "月謝プラン"
         fee: "料金"
+      student:
+        name: "生徒名"
+        age: "年齢"
+        guardian_name: "保護者名"
+        phone_number: "電話番号"
     models:
       fee_plan: "月謝プラン"
       attendance: "出席記録"
+      student: "生徒"

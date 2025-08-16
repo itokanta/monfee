@@ -1,4 +1,14 @@
-<%= form_with model: student, local: true do |f|%>
+<%= form_with model: student, local: true, data: { turbo: false } do |f|%>
+  <% if student.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% student.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
   <div class='field'>
     <div class='field-label'>
       <%= f.label :name, "生徒名"%>
